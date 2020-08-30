@@ -1,10 +1,12 @@
 // ==UserScript==
-// @name:zh-CN   繁体转换
-// @name:en      Convert Traditional Chinese to Simplified Chinese
+// @name         繁体转换
+// @name:en      Traditional Chinese Convension
 // @namespace    qnnnez
 // @version      0.0.1
 // @description:zh-CN  将任意网站上的繁体文字转换成简体
+// @description:en Convert Traditional Chinese to Simplified Chinese
 // @author       qnnnnez
+// @include      https://forum.gamer.com.tw/*
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_registerMenuCommand
