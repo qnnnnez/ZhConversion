@@ -36,17 +36,19 @@
         if (childs) {
             for (var i = 0; i < childs.length; i++) {
                 var child = childs.item(i);
-                if (/BR|META|SCRIPT|HR|TEXTAREA/.test(child.tagName)) continue;
-                if (child.title) {
-                    let title = translateText(child.title);
-                    if (child.title != title) {
-                        child.title = title;
+                if (child.nodeType == 3) {    // text nodes
+                    let data = translateText(child.data);
+                    if (child.data != data) {
+                        child.data = data;
                     }
                 }
-                if (child.alt) {
-                    let alt = translateText(child.alt);
-                    if (child.alt != alt) {
-                        child.alt = alt;
+                if (/BR|META|SCRIPT|HR|TEXTAREA/.test(child.tagName)) continue;
+                for (var attr in ["title", "alt"]) {
+                    if (child.getAttribute && child.getAttribute(attr)) {
+                        let translated = translateText(child.getAttribute(attr));
+                        if (child.getAttribute(attr) != translated) {
+                            child.setAttribute(attr, translated);
+                        }
                     }
                 }
                 if (child.tagName == "INPUT" && child.value !== "" && child.type != "text" && child.type != "search" && child.type != "hidden") {
@@ -54,12 +56,9 @@
                     if (child.value != value) {
                         child.value = value;
                     }
-                } else if (child.nodeType == 3) {
-                    let data = translateText(child.data);
-                    if (child.data != data) {
-                        child.data = data;
-                    }
-                } else translateBody(child);
+                } else {
+                    translateBody(child);
+                }
             }
         }
     }
